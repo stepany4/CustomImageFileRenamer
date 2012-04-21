@@ -56,6 +56,9 @@ void MainWindow::on_actionPrev_triggered()
 
 void MainWindow::on_actionOptions_triggered()
 {
+    // Добавить настройку масштаба изображения
+
+    // Добавить настройку шаблонов имен файла
 
 }
 
@@ -91,12 +94,16 @@ void MainWindow::on_btnRename_clicked()
 
 }
 
-void MainWindow::updateImage(QString fileName)
+void MainWindow::updateImage(QString absFileName)
 {
     m_scene->clear();
-    if (QFile::exists(fileName))
+    if (QFile::exists(absFileName))
     {
-        ui->lbCurName->setText(fileName);
-        m_scene->addPixmap(QPixmap(fileName));
+        QFileInfo fi(absFileName);
+        QString name = fi.fileName();
+        ui->lineEditCurName->setText(name);
+        m_scene->addPixmap(QPixmap(absFileName));
     }
+    else
+        ui->lineEditCurName->setText("");
 }
