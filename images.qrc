@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/imgs">
+        <file>imgs/folder_64.png</file>
+        <file>imgs/gear_64.png</file>
+        <file>imgs/left_64.png</file>
+        <file>imgs/settings.png</file>
+    </qresource>
+</RCC>

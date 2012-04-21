@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>791</width>
+    <height>309</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="lbCurName">
+        <property name="text">
+         <string>Текущее название</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditCurName"/>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelTemplate">
+        <property name="text">
+         <string>Шаблон</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="cbTemplate"/>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelValues">
+        <property name="text">
+         <string>Значения</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditValue1"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditValue2"/>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelResult">
+        <property name="text">
+         <string>Результат</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditResult"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnRename">
+        <property name="text">
+         <string>Переименовать</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QGraphicsView" name="graphicsView">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
+      </property>
+      <property name="interactive">
+       <bool>true</bool>
+      </property>
+      <property name="sceneRect">
+       <rectf>
+        <x>0.000000000000000</x>
+        <y>0.000000000000000</y>
+        <width>0.000000000000000</width>
+        <height>0.000000000000000</height>
+       </rectf>
+      </property>
+      <property name="dragMode">
+       <enum>QGraphicsView::ScrollHandDrag</enum>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>791</width>
+     <height>18</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionOpenFolder"/>
+   <addaction name="separator"/>
+   <addaction name="actionPrev"/>
+   <addaction name="actionNext"/>
+   <addaction name="separator"/>
+   <addaction name="actionOptions"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionOpenFolder">
+   <property name="icon">
+    <iconset>
+     <normalon>:/imgs/imgs/folder_64.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Открыть папку</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionNext">
+   <property name="icon">
+    <iconset>
+     <normalon>:/imgs/imgs/settings.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Следующий файл</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Right, Alt+Right</string>
+   </property>
+  </action>
+  <action name="actionPrev">
+   <property name="icon">
+    <iconset>
+     <normalon>:/imgs/imgs/left_64.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Предыдущий файл</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Left, Alt+Left</string>
+   </property>
+  </action>
+  <action name="actionOptions">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/imgs/imgs/gear_64.png</normaloff>:/imgs/imgs/gear_64.png</iconset>
+   </property>
+   <property name="text">
+    <string>Настройки</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
+ <connections/>
+</ui>
