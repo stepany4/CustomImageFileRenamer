@@ -31,6 +31,7 @@ private slots:
 private:
     QString nextFile();
     QString prevFile();
+    QString curFile();
     void updateImage(QString fileName);
 
 private:
@@ -40,6 +41,7 @@ private:
     QGraphicsScene * m_scene;
     QFileInfoList m_filesList;
     int m_currentItemId;
+    int m_scale;
 };
 
 #endif // MAINWINDOW_H

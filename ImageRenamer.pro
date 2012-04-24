@@ -11,12 +11,24 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    settingsdialog.cpp \
+    textdialog.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    settingsdialog.h \
+    textdialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    settingsdialog.ui \
+    textdialog.ui
 
 RESOURCES += \
     images.qrc
+
+
+
+
+
+
 

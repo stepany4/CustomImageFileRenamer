@@ -3,10 +3,12 @@
 #include <QFileDialog>
 #include <QGraphicsPixmapItem>
 #include <QDebug>
+#include <settingsdialog.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    m_scale(100)
 {
     ui->setupUi(this);
 
@@ -57,9 +59,24 @@ void MainWindow::on_actionPrev_triggered()
 void MainWindow::on_actionOptions_triggered()
 {
     // Добавить настройку масштаба изображения
-
     // Добавить настройку шаблонов имен файла
+    int count = ui->cbTemplate->count();
+    QStringList list;
+    for (int i = 0; i < count; i++)
+        list.append(ui->cbTemplate->itemText(i));
 
+    SettingsDialog dialog(list, m_scale, this);
+    int result = dialog.exec();
+    if (result == QDialog::Accepted)
+    {
+        m_scale = dialog.scale();
+        ui->cbTemplate->clear();
+        list = dialog.templatesList();
+        foreach(QString str, list)
+            ui->cbTemplate->addItem(str);
+        QString fileName = curFile();
+        updateImage(fileName);
+    }
 }
 
 QString MainWindow::nextFile()
@@ -84,6 +101,14 @@ QString MainWindow::prevFile()
     }
 }
 
+QString MainWindow::curFile()
+{
+    if (m_currentItemId < 0 || m_currentItemId >= m_filesList.count())
+        return QString();
+    else
+        return m_filesList.at(m_currentItemId).absoluteFilePath();
+}
+
 void MainWindow::on_btnRename_clicked()
 {
     QString templ = ui->cbTemplate->currentText();
@@ -91,7 +116,6 @@ void MainWindow::on_btnRename_clicked()
             .arg(ui->lineEditValue1->text())
             .arg(ui->lineEditValue2->text());
     ui->labelResult->setText(resultName);
-
 }
 
 void MainWindow::updateImage(QString absFileName)
@@ -102,7 +126,9 @@ void MainWindow::updateImage(QString absFileName)
         QFileInfo fi(absFileName);
         QString name = fi.fileName();
         ui->lineEditCurName->setText(name);
-        m_scene->addPixmap(QPixmap(absFileName));
+        QPixmap pm(absFileName);
+        int width = pm.width()*m_scale/100.0;
+        m_scene->addPixmap(pm.scaledToWidth(width));
     }
     else
         ui->lineEditCurName->setText("");
