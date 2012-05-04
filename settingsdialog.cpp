@@ -9,10 +9,12 @@ SettingsDialog::SettingsDialog(const QStringList & list, int scale, QWidget *par
 {
     ui->setupUi(this);
 
-    ui->scaleComboBox->addItem("10%", 10);
-    ui->scaleComboBox->addItem("25%", 25);
-    ui->scaleComboBox->addItem("50%", 50);
-    ui->scaleComboBox->addItem("100%", 100);
+    int scaleLocal = 100;
+    for (int i = 0; i < 6; i++)
+    {
+        ui->scaleComboBox->addItem(QString("%1%").arg(scaleLocal), scaleLocal);
+        scaleLocal = scaleLocal / 1.5;
+    }
     setScale(scale);
     setTemplatesList(list);
 }
@@ -70,10 +72,16 @@ void SettingsDialog::on_addTemplateButton_clicked()
 
 void SettingsDialog::on_editTemplateButton_clicked()
 {
-    TextDialog dialog(this);
-    dialog.setText(ui->templatesListWidget->currentItem()->text());
-    if (dialog.exec() == QDialog::Accepted)
-        ui->templatesListWidget->currentItem()->setText(dialog.text());
+    if (ui->templatesListWidget->count() > 0)
+    {
+        if (ui->templatesListWidget->selectedItems().count() > 0)
+        {
+            TextDialog dialog(this);
+            dialog.setText(ui->templatesListWidget->currentItem()->text());
+            if (dialog.exec() == QDialog::Accepted)
+                ui->templatesListWidget->currentItem()->setText(dialog.text());
+        }
+    }
 }
 
 void SettingsDialog::on_delTemplateButton_clicked()

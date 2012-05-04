@@ -4,6 +4,8 @@
 #include <QGraphicsPixmapItem>
 #include <QDebug>
 #include <settingsdialog.h>
+#include <QSettings>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,10 +18,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_scene = new QGraphicsScene(ui->graphicsView);
     ui->graphicsView->setScene(m_scene);
+
+    readSettings();
 }
 
 MainWindow::~MainWindow()
 {
+    writeSettings();
     delete m_scene;
     delete ui;
 }
@@ -111,11 +116,33 @@ QString MainWindow::curFile()
 
 void MainWindow::on_btnRename_clicked()
 {
-    QString templ = ui->cbTemplate->currentText();
-    QString resultName = templ
-            .arg(ui->lineEditValue1->text())
-            .arg(ui->lineEditValue2->text());
-    ui->labelResult->setText(resultName);
+    QString resultName = updateResultName();
+
+    // переименовываем файл
+    QDir dir(m_folder);
+    QString sourceFN = dir.absoluteFilePath(ui->lineEditCurName->text());
+    qDebug() << sourceFN;
+    QFileInfo fi(sourceFN);
+    QString suffix = fi.suffix();
+    QString destFN = dir.absoluteFilePath(resultName.append(".").append(suffix));
+    qDebug() << destFN;
+    bool result = QFile::rename(sourceFN, destFN);
+    if (!result)
+    {
+        QMessageBox msgBox;
+        msgBox.setText(trUtf8("Не удалось переименовать файл."));
+        msgBox.setInformativeText(trUtf8("Файл с таким именем уже существует,"
+                                         " перезаписать его?"));
+        msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        int ret = msgBox.exec();
+        if (ret == QMessageBox::Ok)
+        {
+            QFile::remove(sourceFN);
+            result = QFile::rename(sourceFN, destFN);
+            qDebug() << result;
+        }
+    }
 }
 
 void MainWindow::updateImage(QString absFileName)
@@ -132,4 +159,68 @@ void MainWindow::updateImage(QString absFileName)
     }
     else
         ui->lineEditCurName->setText("");
+}
+
+void MainWindow::writeSettings()
+{
+    int count = ui->cbTemplate->count();
+    QStringList list;
+    for (int i = 0; i < count; i++)
+        list.append(ui->cbTemplate->itemText(i));
+
+    QSettings settings("BAST", "Image Renamer");
+
+    settings.beginGroup("Options");
+    settings.setValue("scale", m_scale);
+    settings.setValue("list", list);
+    settings.endGroup();
+
+    settings.beginGroup("MainWindow");
+    settings.setValue("size", size());
+    settings.setValue("pos", pos());
+    settings.endGroup();
+}
+
+void MainWindow::readSettings()
+{
+    QSettings settings("BAST", "Image Renamer");
+
+    settings.beginGroup("Options");
+    m_scale = settings.value("scale", 100).toInt();
+    QStringList list = settings.value("list", QStringList()).toStringList();
+    settings.endGroup();
+
+    ui->cbTemplate->clear();
+    foreach(QString str, list)
+        ui->cbTemplate->addItem(str);
+
+    settings.beginGroup("MainWindow");
+    resize(settings.value("size", QSize(1024, 700)).toSize());
+    move(settings.value("pos", QPoint(0, 0)).toPoint());
+    settings.endGroup();
+}
+
+void MainWindow::on_lineEditValue1_textChanged(const QString &/*arg1*/)
+{
+    updateResultName();
+}
+
+void MainWindow::on_lineEditValue2_textChanged(const QString &/*arg1*/)
+{
+    updateResultName();
+}
+
+void MainWindow::on_cbTemplate_currentIndexChanged(const QString &/*arg1*/)
+{
+    updateResultName();
+}
+
+QString MainWindow::updateResultName()
+{
+    QString templ = ui->cbTemplate->currentText();
+    QString resultName = templ
+            .arg(ui->lineEditValue1->text())
+            .arg(ui->lineEditValue2->text());
+    ui->lineEditResult->setText(resultName);
+    return resultName;
 }

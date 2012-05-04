@@ -28,11 +28,22 @@ private slots:
 
     void on_btnRename_clicked();
 
+    void on_lineEditValue1_textChanged(const QString &arg1);
+
+    void on_lineEditValue2_textChanged(const QString &arg1);
+
+    void on_cbTemplate_currentIndexChanged(const QString &arg1);
+
 private:
     QString nextFile();
     QString prevFile();
     QString curFile();
     void updateImage(QString fileName);
+
+    void readSettings();
+    void writeSettings();
+
+    QString updateResultName();
 
 private:
     Ui::MainWindow *ui;

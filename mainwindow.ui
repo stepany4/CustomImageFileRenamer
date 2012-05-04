@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Переименование картинок</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -31,6 +31,9 @@
           <width>100</width>
           <height>0</height>
          </size>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -173,7 +176,6 @@
    <addaction name="separator"/>
    <addaction name="actionOptions"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpenFolder">
    <property name="icon">
     <iconset>
