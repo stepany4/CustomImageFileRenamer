@@ -17,7 +17,8 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     settingsdialog.h \
-    textdialog.h
+    textdialog.h \
+    version.h
 
 FORMS    += mainwindow.ui \
     settingsdialog.ui \
@@ -25,6 +26,13 @@ FORMS    += mainwindow.ui \
 
 RESOURCES += \
     images.qrc
+
+OTHER_FILES += \
+    resources.rc
+
+
+RC_FILE = resources.rc
+
 
 
 

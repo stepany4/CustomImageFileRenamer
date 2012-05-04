@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+п»ї#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 #include <QGraphicsPixmapItem>
@@ -32,7 +32,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_actionOpenFolder_triggered()
 {
     m_folder = QFileDialog::getExistingDirectory();
-    // получаем список файлов в папке
+    // РїРѕР»СѓС‡Р°РµРј СЃРїРёСЃРѕРє С„Р°Р№Р»РѕРІ РІ РїР°РїРєРµ
     QDir dir(m_folder);
     QStringList filters;
     filters << "*.jpg" << "*.jpeg" << "*.png" << "*.gif" << "*.tiff" << "*.bmp";
@@ -40,7 +40,7 @@ void MainWindow::on_actionOpenFolder_triggered()
     m_filesList = dir.entryInfoList(QDir::NoFilter, QDir::Name);
     m_currentItemId = 0;
 
-    // показываем первое изображение в папке по алфавиту\дате
+    // РїРѕРєР°Р·С‹РІР°РµРј РїРµСЂРІРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ РІ РїР°РїРєРµ РїРѕ Р°Р»С„Р°РІРёС‚Сѓ\РґР°С‚Рµ
     QString fileName = m_filesList.at(0).absoluteFilePath();
     bool exists = QFile::exists(fileName);
     qDebug() << exists;
@@ -63,8 +63,8 @@ void MainWindow::on_actionPrev_triggered()
 
 void MainWindow::on_actionOptions_triggered()
 {
-    // Добавить настройку масштаба изображения
-    // Добавить настройку шаблонов имен файла
+    // Р”РѕР±Р°РІРёС‚СЊ РЅР°СЃС‚СЂРѕР№РєСѓ РјР°СЃС€С‚Р°Р±Р° РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
+    // Р”РѕР±Р°РІРёС‚СЊ РЅР°СЃС‚СЂРѕР№РєСѓ С€Р°Р±Р»РѕРЅРѕРІ РёРјРµРЅ С„Р°Р№Р»Р°
     int count = ui->cbTemplate->count();
     QStringList list;
     for (int i = 0; i < count; i++)
@@ -118,7 +118,7 @@ void MainWindow::on_btnRename_clicked()
 {
     QString resultName = updateResultName();
 
-    // переименовываем файл
+    // РїРµСЂРµРёРјРµРЅРѕРІС‹РІР°РµРј С„Р°Р№Р»
     QDir dir(m_folder);
     QString sourceFN = dir.absoluteFilePath(ui->lineEditCurName->text());
     qDebug() << sourceFN;
@@ -130,9 +130,9 @@ void MainWindow::on_btnRename_clicked()
     if (!result)
     {
         QMessageBox msgBox;
-        msgBox.setText(trUtf8("Не удалось переименовать файл."));
-        msgBox.setInformativeText(trUtf8("Файл с таким именем уже существует,"
-                                         " перезаписать его?"));
+        msgBox.setText(QString::fromUtf8("РќРµ СѓРґР°Р»РѕСЃСЊ РїРµСЂРµРёРјРµРЅРѕРІР°С‚СЊ С„Р°Р№Р»."));
+        msgBox.setInformativeText(trUtf8("Р¤Р°Р№Р» СЃ С‚Р°РєРёРј РёРјРµРЅРµРј СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚,"
+                                         " РїРµСЂРµР·Р°РїРёСЃР°С‚СЊ РµРіРѕ?"));
         msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
         msgBox.setDefaultButton(QMessageBox::Ok);
         int ret = msgBox.exec();
